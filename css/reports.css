@@ -1,0 +1,111 @@
+/* Reports Page Styles */
+
+.reports-container {
+    max-width: 1100px;
+    margin: 2rem auto;
+    background: rgba(255,255,255,0.92);
+    border-radius: 16px;
+    box-shadow: 0 4px 24px rgba(76, 81, 255, 0.08);
+    padding: 2rem 2.5rem;
+}
+
+.report-tabs {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.report-tab {
+    background: #f3f4f6;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    padding: 0.5rem 1.5rem;
+    font-weight: 500;
+    color: #4f46e5;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+    outline: none;
+}
+.report-tab.active, .report-tab:hover {
+    background: #667eea;
+    color: #fff;
+}
+
+.report-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 2rem;
+    background: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 1px 4px rgba(76, 81, 255, 0.04);
+}
+.report-table th, .report-table td {
+    padding: 0.75rem 1rem;
+    text-align: left;
+}
+.report-table th {
+    background: #f3f4f6;
+    color: #22223b;
+    font-weight: 600;
+    border-bottom: 2px solid #e5e7eb;
+}
+.report-table tr {
+    border-bottom: 1px solid #e5e7eb;
+}
+.report-table tr:last-child {
+    border-bottom: none;
+}
+.report-table td {
+    color: #444;
+}
+
+.section-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #4f46e5;
+    margin: 2rem 0 1rem 0;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.top-customers, .low-stock {
+    margin-bottom: 2rem;
+}
+
+.customer, .item {
+    background: #f9fafb;
+    border-radius: 8px;
+    padding: 1rem 1.5rem;
+    margin-bottom: 1rem;
+    box-shadow: 0 1px 4px rgba(76, 81, 255, 0.04);
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.customer-name {
+    font-weight: 600;
+    color: #22223b;
+    margin-bottom: 0.25rem;
+    font-size: 1rem;
+}
+
+.item-name {
+    font-weight: 600;
+    color: #b91c1c;
+    font-size: 1rem;
+}
+
+@media (max-width: 700px) {
+    .reports-container {
+        padding: 1rem;
+    }
+    .report-table th, .report-table td {
+        padding: 0.5rem 0.5rem;
+    }
+    .customer, .item {
+        padding: 0.75rem 1rem;
+    }
+} 
