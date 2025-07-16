@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sales - Web CRM</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/sales.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <h1>
+                    <i class="fas fa-chart-line"></i>
+                    Web CRM
+                </h1>
+                <nav class="nav">
+                    <a href="dashboard.html">
+                        <i class="fas fa-tachometer-alt"></i>
+                        Dashboard
+                    </a>
+                    <a href="sales.html" class="active">
+                        <i class="fas fa-shopping-cart"></i>
+                        Sales
+                    </a>
+                    <a href="inventory.html">
+                        <i class="fas fa-boxes"></i>
+                        Inventory
+                    </a>
+                    <a href="expenses.html">
+                        <i class="fas fa-receipt"></i>
+                        Expenses
+                    </a>
+                    <a href="reports.html">
+                        <i class="fas fa-chart-bar"></i>
+                        Reports
+                    </a>
+                    <a href="subscription.html">
+                        <i class="fas fa-credit-card"></i>
+                        Subscription
+                    </a>
+                    <a href="#" onclick="logout()">
+                        <i class="fas fa-sign-out-alt"></i>
+                        Logout
+                    </a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div class="container">
+            <div class="sales-container">
+                <!-- Sales Stats -->
+                <div class="sales-stats">
+                    <div class="sales-stat-card">
+                        <div class="sales-stat-icon">
+                            <i class="fas fa-dollar-sign"></i>
+                        </div>
+                        <div class="sales-stat-value">$8,450</div>
+                        <div class="sales-stat-label">Today's Sales</div>
+                        <div class="sales-stat-change positive">+15.2%</div>
+                    </div>
+                    
+                    <div class="sales-stat-card">
+                        <div class="sales-stat-icon">
+                            <i class="fas fa-shopping-bag"></i>
+                        </div>
+                        <div class="sales-stat-value">23</div>
+                        <div class="sales-stat-label">Today's Orders</div>
+                        <div class="sales-stat-change positive">+8.7%</div>
+                    </div>
+                    
+                    <div class="sales-stat-card">
+                        <div class="sales-stat-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="sales-stat-value">18</div>
+                        <div class="sales-stat-label">New Customers</div>
+                        <div class="sales-stat-change positive">+12.5%</div>
+                    </div>
+                    
+                    <div class="sales-stat-card">
+                        <div class="sales-stat-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <div class="sales-stat-value">$367</div>
+                        <div class="sales-stat-label">Average Order</div>
+                        <div class="sales-stat-change positive">+5.3%</div>
+                    </div>
+                </div>
+
+                <!-- Sales Form -->
+                <div class="sales-form-container">
+                    <div class="sales-form-title">
+                        <i class="fas fa-plus-circle"></i>
+                        Create New Sale
+                    </div>
+                    
+                    <div class="sales-form-grid">
+                        <div class="form-section">
+                            <h4>
+                                <i class="fas fa-user"></i>
+                                Customer Information
+                            </h4>
+                            <div class="form-group">
+                                <label for="customer-name">Customer Name</label>
+                                <input type="text" id="customer-name" placeholder="Enter customer name">
+                            </div>
+                            <div class="form-group">
+                                <label for="customer-email">Email</label>
+                                <input type="email" id="customer-email" placeholder="Enter customer email">
+                            </div>
+                            <div class="form-group">
+                                <label for="customer-phone">Phone</label>
+                                <input type="tel" id="customer-phone" placeholder="Enter customer phone">
+                            </div>
+                        </div>
+                        
+                        <div class="form-section">
+                            <h4>
+                                <i class="fas fa-box"></i>
+                                Product Selection
+                            </h4>
+                            <div class="product-selection">
+                                <div class="product-item" onclick="selectProduct(this, 'Laptop', 999.99)">
+                                    <div class="product-info">
+                                        <div class="product-icon">
+                                            <i class="fas fa-laptop"></i>
+                                        </div>
+                                        <div class="product-details">
+                                            <h5>Laptop</h5>
+                                            <p>High-performance laptop</p>
+                                        </div>
+                                    </div>
+                                    <div class="product-price">$999.99</div>
+                                </div>
+                                
+                                <div class="product-item" onclick="selectProduct(this, 'Smartphone', 599.99)">
+                                    <div class="product-info">
+                                        <div class="product-icon">
+                                            <i class="fas fa-mobile-alt"></i>
+                                        </div>
+                                        <div class="product-details">
+                                            <h5>Smartphone</h5>
+                                            <p>Latest smartphone model</p>
+                                        </div>
+                                    </div>
+                                    <div class="product-price">$599.99</div>
+                                </div>
+                                
+                                <div class="product-item" onclick="selectProduct(this, 'Headphones', 199.99)">
+                                    <div class="product-info">
+                                        <div class="product-icon">
+                                            <i class="fas fa-headphones"></i>
+                                        </div>
+                                        <div class="product-details">
+                                            <h5>Headphones</h5>
+                                            <p>Wireless noise-canceling</p>
+                                        </div>
+                                    </div>
+                                    <div class="product-price">$199.99</div>
+                                </div>
+                                
+                                <div class="product-item" onclick="selectProduct(this, 'Tablet', 399.99)">
+                                    <div class="product-info">
+                                        <div class="product-icon">
+                                            <i class="fas fa-tablet-alt"></i>
+                                        </div>
+                                        <div class="product-details">
+                                            <h5>Tablet</h5>
+                                            <p>10-inch tablet device</p>
+                                        </div>
+                                    </div>
+                                    <div class="product-price">$399.99</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Cart Summary -->
+                <div class="cart-summary">
+                    <div class="cart-title">
+                        <i class="fas fa-shopping-cart"></i>
+                        Cart Summary
+                    </div>
+                    
+                    <div class="cart-items" id="cart-items">
+                        <div class="cart-item">
+                            <div class="cart-item-info">
+                                <div class="cart-item-icon">
+                                    <i class="fas fa-laptop"></i>
+                                </div>
+                                <div class="cart-item-details">
+                                    <h6>Laptop</h6>
+                                    <p>High-performance laptop</p>
+                                </div>
+                            </div>
+                            <div class="cart-item-quantity">
+                                <button class="quantity-btn" onclick="changeQuantity('laptop', -1)">-</button>
+                                <span class="quantity-display">1</span>
+                                <button class="quantity-btn" onclick="changeQuantity('laptop', 1)">+</button>
+                            </div>
+                            <div class="cart-item-total">$999.99</div>
+                        </div>
+                        
+                        <div class="cart-item">
+                            <div class="cart-item-info">
+                                <div class="cart-item-icon">
+                                    <i class="fas fa-mobile-alt"></i>
+                                </div>
+                                <div class="cart-item-details">
+                                    <h6>Smartphone</h6>
+                                    <p>Latest smartphone model</p>
+                                </div>
+                            </div>
+                            <div class="cart-item-quantity">
+                                <button class="quantity-btn" onclick="changeQuantity('smartphone', -1)">-</button>
+                                <span class="quantity-display">2</span>
+                                <button class="quantity-btn" onclick="changeQuantity('smartphone', 1)">+</button>
+                            </div>
+                            <div class="cart-item-total">$1,199.98</div>
+                        </div>
+                    </div>
+                    
+                    <div class="cart-total">
+                        <div class="cart-total-row">
+                            <span>Subtotal:</span>
+                            <span>$2,199.97</span>
+                        </div>
+                        <div class="cart-total-row">
+                            <span>Tax (8.5%):</span>
+                            <span>$186.95</span>
+                        </div>
+                        <div class="cart-total-row">
+                            <span>Shipping:</span>
+                            <span>$25.00</span>
+                        </div>
+                        <div class="cart-total-row final">
+                            <span>Total:</span>
+                            <span>$2,411.92</span>
+                        </div>
+                    </div>
+                    
+                    <button class="btn btn-success btn-block" onclick="processSale()">
+                        <i class="fas fa-check"></i>
+                        Complete Sale
+                    </button>
+                </div>
+
+                <!-- Sales History -->
+                <div class="sales-table-container">
+                    <div class="sales-table-title">
+                        <i class="fas fa-history"></i>
+                        Recent Sales
+                    </div>
+                    
+                    <table class="sales-table">
+                        <thead>
+                            <tr>
+                                <th>Order ID</th>
+                                <th>Customer</th>
+                                <th>Products</th>
+                                <th>Total</th>
+                                <th>Date</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>#ORD-001</td>
+                                <td>John Doe</td>
+                                <td>Laptop, Headphones</td>
+                                <td>$1,199.98</td>
+                                <td>2024-01-15</td>
+                                <td><span class="sales-status completed">Completed</span></td>
+                            </tr>
+                            <tr>
+                                <td>#ORD-002</td>
+                                <td>Jane Smith</td>
+                                <td>Smartphone</td>
+                                <td>$599.99</td>
+                                <td>2024-01-14</td>
+                                <td><span class="sales-status completed">Completed</span></td>
+                            </tr>
+                            <tr>
+                                <td>#ORD-003</td>
+                                <td>Mike Johnson</td>
+                                <td>Tablet, Headphones</td>
+                                <td>$599.98</td>
+                                <td>2024-01-13</td>
+                                <td><span class="sales-status pending">Pending</span></td>
+                            </tr>
+                            <tr>
+                                <td>#ORD-004</td>
+                                <td>Sarah Wilson</td>
+                                <td>Laptop</td>
+                                <td>$999.99</td>
+                                <td>2024-01-12</td>
+                                <td><span class="sales-status cancelled">Cancelled</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="js/sales.js"></script>
+</body>
+</html>

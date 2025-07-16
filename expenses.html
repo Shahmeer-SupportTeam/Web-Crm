@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expenses Management - Web CRM</title>
+  <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/expenses.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <h1>
+                    <i class="fas fa-receipt"></i>
+                    Web CRM
+                </h1>
+                <nav class="nav">
+                    <a href="dashboard.html">
+                        <i class="fas fa-tachometer-alt"></i>
+                        Dashboard
+                    </a>
+                    <a href="sales.html">
+                        <i class="fas fa-shopping-cart"></i>
+                        Sales
+                    </a>
+                    <a href="inventory.html">
+                        <i class="fas fa-boxes"></i>
+                        Inventory
+                    </a>
+                    <a href="expenses.html" class="active">
+                        <i class="fas fa-receipt"></i>
+                        Expenses
+                    </a>
+                    <a href="reports.html">
+                        <i class="fas fa-chart-bar"></i>
+                        Reports
+                    </a>
+                    <a href="subscription.html">
+                        <i class="fas fa-credit-card"></i>
+                        Subscription
+                    </a>
+                    <a href="#" onclick="logout()">
+                        <i class="fas fa-sign-out-alt"></i>
+                        Logout
+                    </a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div class="container">
+            <div class="expenses-container">
+                <!-- Page Header -->
+                <div class="page-header">
+                    <div class="header-content">
+                        <h2 class="page-title">
+                            <i class="fas fa-receipt"></i>
+                            Expenses Management
+                        </h2>
+                        <p class="page-subtitle">Track and manage your business expenses</p>
+                    </div>
+                    <div class="header-actions">
+                        <button class="btn btn-primary" onclick="openExpenseModal()">
+                            <i class="fas fa-plus"></i>
+                            Add Expense
+                        </button>
+                        <button class="btn btn-secondary" onclick="exportExpenses()">
+                            <i class="fas fa-download"></i>
+                            Export
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Stats Cards -->
+                <div class="stats-grid">
+                    <div class="stat-card animate-fade-in-up">
+                        <div class="stat-icon">
+                            <i class="fas fa-calendar-alt"></i>
+                        </div>
+                        <div class="stat-content">
+                            <div class="stat-value" id="current-month-total">PKR 0</div>
+                            <div class="stat-label">This Month</div>
+                            <div class="stat-change" id="month-change">+0%</div>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card animate-fade-in-up delay-200">
+                        <div class="stat-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <div class="stat-content">
+                            <div class="stat-value" id="total-expenses">PKR 0</div>
+                            <div class="stat-label">Total Expenses</div>
+                            <div class="stat-change" id="total-change">+0%</div>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card animate-fade-in-up delay-400">
+                        <div class="stat-icon">
+                            <i class="fas fa-tags"></i>
+                        </div>
+                        <div class="stat-content">
+                            <div class="stat-value" id="categories-count">0</div>
+                            <div class="stat-label">Categories</div>
+                            <div class="stat-change">Active</div>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card animate-fade-in-up delay-600">
+                        <div class="stat-icon">
+                            <i class="fas fa-arrow-trend-up"></i>
+                        </div>
+                        <div class="stat-content">
+                            <div class="stat-value" id="avg-expense">PKR 0</div>
+                            <div class="stat-label">Average</div>
+                            <div class="stat-change">Per Month</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Charts Section -->
+                <div class="charts-section">
+                    <div class="chart-card animate-fade-in-up delay-800">
+                        <div class="chart-header">
+                            <h3>
+                                <i class="fas fa-chart-pie"></i>
+                                Expense Categories
+                            </h3>
+                            <div class="chart-actions">
+                                <button class="btn btn-sm btn-outline" onclick="toggleChartView()">
+                                    <i class="fas fa-chart-bar"></i>
+                                    Toggle View
+                                </button>
+                            </div>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="categoryChart"></canvas>
+                        </div>
+                    </div>
+                    
+                    <div class="chart-card animate-fade-in-up delay-1000">
+                        <div class="chart-header">
+                            <h3>
+                                <i class="fas fa-chart-line"></i>
+                                Monthly Trend
+                            </h3>
+                            <div class="chart-actions">
+                                <select id="trendPeriod" onchange="updateTrendChart()">
+                                    <option value="6">Last 6 Months</option>
+                                    <option value="12">Last 12 Months</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="trendChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Expenses -->
+                <div class="recent-expenses animate-fade-in-up delay-1200">
+                    <div class="section-header">
+                        <h3>
+                            <i class="fas fa-clock"></i>
+                            Recent Expenses
+                        </h3>
+                        <button class="btn btn-sm btn-outline" onclick="viewAllExpenses()">
+                            View All
+                        </button>
+                    </div>
+                    <div class="table-container">
+                        <table class="table" id="expensesTable">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Category</th>
+                                    <th>Amount</th>
+                                    <th>Notes</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="expensesTableBody">
+                                <!-- Data will be loaded here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Add Expense Modal -->
+    <div class="modal-overlay" id="expenseModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 class="modal-title">
+                    <i class="fas fa-plus"></i>
+                    Add New Expense
+                </h3>
+                <button class="modal-close" onclick="closeExpenseModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <form id="expenseForm" class="modal-content">
+    <div class="form-group">
+                    <label class="form-label" for="expenseDate">Date</label>
+                    <input type="date" id="expenseDate" class="form-input" required>
+    </div>
+    
+    <div class="form-group">
+                    <label class="form-label" for="expenseAmount">Amount (PKR)</label>
+                    <input type="number" id="expenseAmount" class="form-input" step="0.01" min="0" required>
+    </div>
+    
+    <div class="form-group">
+                    <label class="form-label" for="expenseCategory">Category</label>
+                    <select id="expenseCategory" class="form-input" required>
+                        <option value="">Select Category</option>
+        <option value="rent">Rent</option>
+        <option value="bill">Utility Bill</option>
+        <option value="transport">Transport</option>
+        <option value="salary">Staff Salary</option>
+                        <option value="marketing">Marketing</option>
+                        <option value="maintenance">Maintenance</option>
+                        <option value="insurance">Insurance</option>
+        <option value="other">Other</option>
+      </select>
+    </div>
+    
+    <div class="form-group">
+                    <label class="form-label" for="expenseNotes">Notes</label>
+                    <textarea id="expenseNotes" class="form-input" rows="3" placeholder="Optional notes about this expense"></textarea>
+    </div>
+    
+                <div class="form-group">
+                    <label class="form-label" for="expenseReceipt">Receipt (Optional)</label>
+                    <input type="file" id="expenseReceipt" class="form-input" accept="image/*,.pdf">
+                </div>
+                
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" onclick="closeExpenseModal()">
+                        Cancel
+                    </button>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-save"></i>
+                        Save Expense
+                    </button>
+      </div>
+            </form>
+      </div>
+    </div>
+
+    <!-- Edit Expense Modal -->
+    <div class="modal-overlay" id="editExpenseModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 class="modal-title">
+                    <i class="fas fa-edit"></i>
+                    Edit Expense
+                </h3>
+                <button class="modal-close" onclick="closeEditExpenseModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <form id="editExpenseForm" class="modal-content">
+                <input type="hidden" id="editExpenseId">
+                <div class="form-group">
+                    <label class="form-label" for="editExpenseDate">Date</label>
+                    <input type="date" id="editExpenseDate" class="form-input" required>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label" for="editExpenseAmount">Amount (PKR)</label>
+                    <input type="number" id="editExpenseAmount" class="form-input" step="0.01" min="0" required>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label" for="editExpenseCategory">Category</label>
+                    <select id="editExpenseCategory" class="form-input" required>
+                        <option value="">Select Category</option>
+                        <option value="rent">Rent</option>
+                        <option value="bill">Utility Bill</option>
+                        <option value="transport">Transport</option>
+                        <option value="salary">Staff Salary</option>
+                        <option value="marketing">Marketing</option>
+                        <option value="maintenance">Maintenance</option>
+                        <option value="insurance">Insurance</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label" for="editExpenseNotes">Notes</label>
+                    <textarea id="editExpenseNotes" class="form-input" rows="3"></textarea>
+                </div>
+                
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" onclick="deleteExpense()">
+                        <i class="fas fa-trash"></i>
+                        Delete
+                    </button>
+                    <button type="button" class="btn btn-secondary" onclick="closeEditExpenseModal()">
+                        Cancel
+                    </button>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-save"></i>
+                        Update Expense
+                    </button>
+                </div>
+            </form>
+  </div>
+</div>
+
+    <script src="js/utils.js"></script>
+    <script src="js/crm-framework.js"></script>
+    <script src="js/expenses.js"></script>
+</body>
+</html>

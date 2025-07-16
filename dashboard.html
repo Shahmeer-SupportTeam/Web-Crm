@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Web CRM</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <h1>
+                    <i class="fas fa-chart-line"></i>
+                    Web CRM
+                </h1>
+                <nav class="nav">
+                    <a href="dashboard.html" class="active">
+                        <i class="fas fa-tachometer-alt"></i>
+                        Dashboard
+                    </a>
+                    <a href="sales.html">
+                        <i class="fas fa-shopping-cart"></i>
+                        Sales
+                    </a>
+                    <a href="inventory.html">
+                        <i class="fas fa-boxes"></i>
+                        Inventory
+                    </a>
+                    <a href="expenses.html">
+                        <i class="fas fa-receipt"></i>
+                        Expenses
+                    </a>
+                    <a href="reports.html">
+                        <i class="fas fa-chart-bar"></i>
+                        Reports
+                    </a>
+                    <a href="subscription.html">
+                        <i class="fas fa-credit-card"></i>
+                        Subscription
+                    </a>
+                    <a href="#" onclick="logout()">
+                        <i class="fas fa-sign-out-alt"></i>
+                        Logout
+                    </a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div class="container">
+            <div class="dashboard-container">
+                <!-- Stats Grid -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-dollar-sign"></i>
+                        </div>
+                        <div class="stat-value">$12,450</div>
+                        <div class="stat-label">Total Revenue</div>
+                        <div class="stat-change positive">+12.5%</div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-shopping-bag"></i>
+                        </div>
+                        <div class="stat-value">156</div>
+                        <div class="stat-label">Total Sales</div>
+                        <div class="stat-change positive">+8.3%</div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="stat-value">89</div>
+                        <div class="stat-label">Customers</div>
+                        <div class="stat-change positive">+15.2%</div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-box"></i>
+                        </div>
+                        <div class="stat-value">234</div>
+                        <div class="stat-label">Products</div>
+                        <div class="stat-change negative">-2.1%</div>
+                    </div>
+                </div>
+
+                <!-- Quick Actions -->
+                <div class="quick-actions">
+                    <div class="action-card" onclick="location.href='sales.html'">
+                        <div class="action-icon">
+                            <i class="fas fa-plus"></i>
+                        </div>
+                        <div class="action-title">New Sale</div>
+                        <div class="action-description">Create a new sales transaction</div>
+                    </div>
+                    
+                    <div class="action-card" onclick="location.href='inventory.html'">
+                        <div class="action-icon">
+                            <i class="fas fa-box-open"></i>
+                        </div>
+                        <div class="action-title">Add Product</div>
+                        <div class="action-description">Add new product to inventory</div>
+                    </div>
+                    
+                    <div class="action-card" onclick="location.href='expenses.html'">
+                        <div class="action-icon">
+                            <i class="fas fa-receipt"></i>
+                        </div>
+                        <div class="action-title">Record Expense</div>
+                        <div class="action-description">Log business expenses</div>
+                    </div>
+                    
+                    <div class="action-card" onclick="location.href='reports.html'">
+                        <div class="action-icon">
+                            <i class="fas fa-chart-pie"></i>
+                        </div>
+                        <div class="action-title">View Reports</div>
+                        <div class="action-description">Analyze business performance</div>
+                    </div>
+                </div>
+
+                <!-- Charts Section -->
+                <div class="charts-section">
+                    <div class="chart-card">
+                        <h3>
+                            <i class="fas fa-chart-line"></i>
+                            Recent Sales Activity
+                        </h3>
+                        <div id="salesChart" style="height: 300px; background: rgba(255,255,255,0.5); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: var(--text-secondary);">
+                            <div style="text-align: center;">
+                                <i class="fas fa-chart-line" style="font-size: 3rem; margin-bottom: 1rem; opacity: 0.5;"></i>
+                                <p>Sales Chart will be displayed here</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="chart-card">
+                        <h3>
+                            <i class="fas fa-clock"></i>
+                            Recent Activity
+                        </h3>
+                        <ul class="activity-list">
+                            <li class="activity-item">
+                                <div class="activity-icon">
+                                    <i class="fas fa-shopping-cart"></i>
+                                </div>
+                                <div class="activity-content">
+                                    <div class="activity-title">New sale recorded</div>
+                                    <div class="activity-time">2 minutes ago</div>
+                                </div>
+                            </li>
+                            <li class="activity-item">
+                                <div class="activity-icon">
+                                    <i class="fas fa-box"></i>
+                                </div>
+                                <div class="activity-content">
+                                    <div class="activity-title">Product added to inventory</div>
+                                    <div class="activity-time">15 minutes ago</div>
+                                </div>
+                            </li>
+                            <li class="activity-item">
+                                <div class="activity-icon">
+                                    <i class="fas fa-user"></i>
+                                </div>
+                                <div class="activity-content">
+                                    <div class="activity-title">New customer registered</div>
+                                    <div class="activity-time">1 hour ago</div>
+                                </div>
+                            </li>
+                            <li class="activity-item">
+                                <div class="activity-icon">
+                                    <i class="fas fa-receipt"></i>
+                                </div>
+                                <div class="activity-content">
+                                    <div class="activity-title">Expense recorded</div>
+                                    <div class="activity-time">2 hours ago</div>
+                                </div>
+                            </li>
+                            <li class="activity-item">
+                                <div class="activity-icon">
+                                    <i class="fas fa-chart-bar"></i>
+                                </div>
+                                <div class="activity-content">
+                                    <div class="activity-title">Monthly report generated</div>
+                                    <div class="activity-time">1 day ago</div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="js/utils.js"></script>
+    <script src="js/crm-framework.js"></script>
+    <script src="js/dashboard.js"></script>
+</body>
+</html>

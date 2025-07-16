@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reports - Web CRM</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/auth.css">
+    <link rel="stylesheet" href="css/reports.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <h1>
+                    <i class="fas fa-chart-line"></i>
+                    Web CRM
+                </h1>
+                <nav class="nav">
+                    <a href="dashboard.html">
+                        <i class="fas fa-tachometer-alt"></i>
+                        Dashboard
+                    </a>
+                    <a href="sales.html">
+                        <i class="fas fa-shopping-cart"></i>
+                        Sales
+                    </a>
+                    <a href="inventory.html">
+                        <i class="fas fa-boxes"></i>
+                        Inventory
+                    </a>
+                    <a href="expenses.html">
+                        <i class="fas fa-receipt"></i>
+                        Expenses
+                    </a>
+                    <a href="reports.html" class="active">
+                        <i class="fas fa-chart-bar"></i>
+                        Reports
+                    </a>
+                    <a href="subscription.html">
+                        <i class="fas fa-credit-card"></i>
+                        Subscription
+                    </a>
+                    <a href="#" onclick="logout()">
+                        <i class="fas fa-sign-out-alt"></i>
+                        Logout
+                    </a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div class="container">
+            <div class="reports-container">
+                <!-- Reports Header -->
+                <div class="reports-header">
+                    <div class="header-content">
+                        <h1>
+                            <i class="fas fa-chart-bar"></i>
+                            Business Analytics
+                        </h1>
+                        <p>Comprehensive insights into your business performance</p>
+                    </div>
+                    <div class="header-actions">
+                        <button class="btn btn-primary" onclick="exportReport('csv')">
+                            <i class="fas fa-download"></i>
+                            Export CSV
+                        </button>
+                        <button class="btn btn-outline export-pdf" onclick="exportToPDF()">
+                            <i class="fas fa-file-pdf"></i>
+                            Export PDF
+                        </button>
+                        <button class="btn btn-outline export-excel" onclick="exportToExcel()">
+                            <i class="fas fa-file-excel"></i>
+                            Export Excel
+                        </button>
+                        <button class="btn btn-outline" onclick="shareReport()">
+                            <i class="fas fa-share"></i>
+                            Share Link
+                        </button>
+                        <button class="btn btn-outline" onclick="openEmailModal()">
+                            <i class="fas fa-envelope"></i>
+                            Email Report
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Report Controls -->
+                <div class="controls-section">
+                    <div class="control-card">
+                        <div class="control-group">
+                            <label for="report-type">
+                                <i class="fas fa-chart-pie"></i>
+                                Report Type
+                            </label>
+                            <select id="report-type" class="form-control">
+                                <option value="overview">Business Overview</option>
+                                <option value="sales">Sales Analysis</option>
+                                <option value="profit">Profit & Loss</option>
+                                <option value="customers">Customer Insights</option>
+                                <option value="inventory">Inventory Report</option>
+                            </select>
+                        </div>
+                        
+                        <div class="control-group">
+                            <label for="date-range">
+                                <i class="fas fa-calendar"></i>
+                                Date Range
+                            </label>
+                            <select id="date-range" class="form-control">
+                                <option value="7">Last 7 Days</option>
+                                <option value="30" selected>Last 30 Days</option>
+                                <option value="90">Last 3 Months</option>
+                                <option value="365">Last Year</option>
+                                <option value="custom">Custom Range</option>
+                            </select>
+                        </div>
+                        
+                        <div class="control-group" id="custom-date-controls" style="display: none;">
+                            <div class="date-inputs">
+                                <div class="date-input">
+                                    <label for="start-date">From</label>
+                                    <input type="date" id="start-date" class="form-control">
+                                </div>
+                                <div class="date-input">
+                                    <label for="end-date">To</label>
+                                    <input type="date" id="end-date" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <button class="btn btn-primary generate-btn" onclick="generateReport()">
+                            <i class="fas fa-sync-alt"></i>
+                            Generate Report
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Key Metrics -->
+                <div class="metrics-section">
+                    <div class="metrics-grid">
+                        <div class="metric-card">
+                            <div class="metric-icon">
+                                <i class="fas fa-dollar-sign"></i>
+                            </div>
+                            <div class="metric-content">
+                                <h3>Total Revenue</h3>
+                                <div class="metric-value" id="totalRevenue">$45,230</div>
+                                <div class="metric-change positive">
+                                    <i class="fas fa-arrow-up"></i>
+                                    +12.5%
+                                </div>
+                            </div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-icon">
+                                <i class="fas fa-shopping-cart"></i>
+                            </div>
+                            <div class="metric-content">
+                                <h3>Total Sales</h3>
+                                <div class="metric-value" id="totalSales">1,247</div>
+                                <div class="metric-change positive">
+                                    <i class="fas fa-arrow-up"></i>
+                                    +8.3%
+                                </div>
+                            </div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-icon">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <div class="metric-content">
+                                <h3>New Customers</h3>
+                                <div class="metric-value" id="totalCustomers">89</div>
+                                <div class="metric-change positive">
+                                    <i class="fas fa-arrow-up"></i>
+                                    +15.2%
+                                </div>
+                            </div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-icon">
+                                <i class="fas fa-chart-line"></i>
+                            </div>
+                            <div class="metric-content">
+                                <h3>Profit Margin</h3>
+                                <div class="metric-value" id="avgOrderValue">23.4%</div>
+                                <div class="metric-change positive">
+                                    <i class="fas fa-arrow-up"></i>
+                                    +2.1%
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Modern Charts Section -->
+                <div class="charts-section">
+                    <div class="charts-row">
+                        <div class="chart-container">
+                            <h3><i class="fas fa-chart-line"></i> Sales Trend</h3>
+                            <canvas id="salesChart"></canvas>
+                        </div>
+                        <div class="chart-container">
+                            <h3><i class="fas fa-donate"></i> Revenue Breakdown</h3>
+                            <canvas id="revenueChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="charts-row">
+                        <div class="chart-container">
+                            <h3><i class="fas fa-users"></i> Customer Distribution</h3>
+                            <canvas id="customerChart"></canvas>
+                        </div>
+                        <div class="chart-container">
+                            <h3><i class="fas fa-boxes"></i> Inventory Overview</h3>
+                            <canvas id="inventoryChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Detailed Reports -->
+                <div class="detailed-reports">
+                    <div class="report-tabs">
+                        <button class="tab-btn active" data-tab="sales">
+                            <i class="fas fa-shopping-cart"></i>
+                            Sales Report
+                        </button>
+                        <button class="tab-btn" data-tab="customers">
+                            <i class="fas fa-users"></i>
+                            Customer Report
+                        </button>
+                        <button class="tab-btn" data-tab="inventory">
+                            <i class="fas fa-boxes"></i>
+                            Inventory Report
+                        </button>
+                    </div>
+                    
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="sales-tab">
+                            <div class="report-table-container">
+                                <table class="report-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Date</th>
+                                            <th>Product</th>
+                                            <th>Quantity</th>
+                                            <th>Revenue</th>
+                                            <th>Profit</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Jan 15, 2024</td>
+                                            <td>Laptop Pro</td>
+                                            <td>2</td>
+                                            <td>$1,999.98</td>
+                                            <td>$399.98</td>
+                                            <td><span class="status-badge completed">Completed</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Jan 14, 2024</td>
+                                            <td>Smartphone X</td>
+                                            <td>1</td>
+                                            <td>$599.99</td>
+                                            <td>$119.99</td>
+                                            <td><span class="status-badge completed">Completed</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Jan 13, 2024</td>
+                                            <td>Headphones</td>
+                                            <td>3</td>
+                                            <td>$599.97</td>
+                                            <td>$119.97</td>
+                                            <td><span class="status-badge pending">Pending</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Jan 12, 2024</td>
+                                            <td>Tablet</td>
+                                            <td>1</td>
+                                            <td>$399.99</td>
+                                            <td>$79.99</td>
+                                            <td><span class="status-badge completed">Completed</span></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        
+                        <div class="tab-pane" id="customers-tab">
+                            <div class="customer-insights">
+                                <div class="insight-card">
+                                    <h4>Top Customers</h4>
+                                    <div class="customer-list">
+                                        <div class="customer-item">
+                                            <div class="customer-avatar">
+                                                <i class="fas fa-user"></i>
+                                            </div>
+                                            <div class="customer-info">
+                                                <h5>John Doe</h5>
+                                                <p>Total Spent: $2,450</p>
+                                            </div>
+                                            <div class="customer-value">$2,450</div>
+                                        </div>
+                                        <div class="customer-item">
+                                            <div class="customer-avatar">
+                                                <i class="fas fa-user"></i>
+                                            </div>
+                                            <div class="customer-info">
+                                                <h5>Jane Smith</h5>
+                                                <p>Total Spent: $1,890</p>
+                                            </div>
+                                            <div class="customer-value">$1,890</div>
+                                        </div>
+                                        <div class="customer-item">
+                                            <div class="customer-avatar">
+                                                <i class="fas fa-user"></i>
+                                            </div>
+                                            <div class="customer-info">
+                                                <h5>Mike Johnson</h5>
+                                                <p>Total Spent: $1,650</p>
+                                            </div>
+                                            <div class="customer-value">$1,650</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="tab-pane" id="inventory-tab">
+                            <div class="inventory-insights">
+                                <div class="insight-card">
+                                    <h4>Low Stock Items</h4>
+                                    <div class="inventory-list">
+                                        <div class="inventory-item warning">
+                                            <div class="item-icon">
+                                                <i class="fas fa-exclamation-triangle"></i>
+                                            </div>
+                                            <div class="item-info">
+                                                <h5>Laptop Pro</h5>
+                                                <p>Only 3 units left</p>
+                                            </div>
+                                            <div class="item-stock">3</div>
+                                        </div>
+                                        <div class="inventory-item warning">
+                                            <div class="item-icon">
+                                                <i class="fas fa-exclamation-triangle"></i>
+                                            </div>
+                                            <div class="item-info">
+                                                <h5>Smartphone X</h5>
+                                                <p>Only 5 units left</p>
+                                            </div>
+                                            <div class="item-stock">5</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Email Share Modal -->
+    <div class="modal-overlay" id="emailModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 class="modal-title"><i class="fas fa-envelope"></i> Share Report via Email</h3>
+                <button class="modal-close" onclick="closeEmailModal()"><i class="fas fa-times"></i></button>
+            </div>
+            <form class="modal-content" id="emailForm" onsubmit="sendEmailReport(event)">
+                <div class="form-group">
+                    <label for="emailAddress">Recipient Email Address</label>
+                    <input type="email" id="emailAddress" class="form-input" required placeholder="Enter email address">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" onclick="closeEmailModal()">Cancel</button>
+                    <button type="submit" class="btn btn-primary"><i class="fas fa-paper-plane"></i> Send</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="js/reports.js"></script>
+</body>
+</html>

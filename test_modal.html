@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modal Test</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/auth.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="auth-container">
+        <div class="auth-card">
+            <h2>Modal Test</h2>
+            <button type="button" class="btn btn-primary" onclick="testModal()">
+                Test Modal
+            </button>
+        </div>
+    </div>
+
+    <!-- Test Modal -->
+    <div class="modal-overlay" id="testModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 class="modal-title">Test Modal</h3>
+                <button class="modal-close" onclick="closeTestModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-content">
+                <p>This is a test modal. If you can see this, the modal system is working!</p>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" onclick="closeTestModal()">
+                        Close
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function testModal() {
+            console.log('Opening test modal...');
+            document.getElementById('testModal').classList.add('show');
+        }
+        
+        function closeTestModal() {
+            document.getElementById('testModal').classList.remove('show');
+        }
+    </script>
+</body>
+</html> 
